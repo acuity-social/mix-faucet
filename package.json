@@ -7,7 +7,12 @@
   "author": "Jonathan Brown <jbrown@mix-blockchain.org>",
   "license": "Apache-2.0",
   "private": false,
+  "scripts": {
+    "tsc": "tsc",
+    "start": "node out/index.js"
+  },
   "dependencies": {
+    "@types/express": "^4.17.1",
     "express": "^4.17.1",
     "level": "^5.0.1",
     "typescript": "^3.6.3",
