@@ -6,5 +6,8 @@
   "repository": "git@github.com:mix-blockchain/mix-faucet.git",
   "author": "Jonathan Brown <jbrown@mix-blockchain.org>",
   "license": "Apache2.0",
-  "private": false
+  "private": false,
+  "dependencies": {
+    "web3": "^2.0.0-alpha.1"
+  }
 }
