@@ -1,0 +1,10 @@
+{
+  "name": "mix-faucet",
+  "version": "1.0.0",
+  "description": "Faucet to automatically supply MIX when creating a new account in Acuity.",
+  "main": "index.js",
+  "repository": "git@github.com:mix-blockchain/mix-faucet.git",
+  "author": "Jonathan Brown <jbrown@mix-blockchain.org>",
+  "license": "Apache2.0",
+  "private": false
+}
