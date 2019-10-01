@@ -29,14 +29,18 @@ async function start() {
 		}
 		catch (e) {}
 		if (now - timestamp > 1000 * 60 * 60 * 24) {
-			console.log('Success!')
-			db.put(ip, Buffer.from(now.toString()))
+			let address = req.params.address
+			if (!web3.utils.isAddress(address)) {
+				res.send('Invalid MIX address.')
+			}
+			else {
+				res.send('Sending MIX to ' + address)
+				db.put(ip, Buffer.from(now.toString()))
+			}
 		}
 		else {
-			console.log('Failure!')
+			res.send('This IP address has already received MIX with the last 24 hours.')
 		}
-		console.log(req.params.address)
-		res.send('Hello World!')
 	})
 
 	app.listen(port, () => console.log(`MIX Faucet listening on port ${port}!`))
