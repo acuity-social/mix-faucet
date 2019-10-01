@@ -20,7 +20,21 @@ async function start() {
 	let app = express()
 	let port = 3000
 
-	app.get('/:address', (req, res) => {
+	app.get('/:address', async (req, res) => {
+		let ip = req.ip
+		let timestamp:number = 0
+		let now = Date.now()
+		try {
+			timestamp = parseInt((await db.get(ip)).toString())
+		}
+		catch (e) {}
+		if (now - timestamp > 1000 * 60 * 60 * 24) {
+			console.log('Success!')
+			db.put(ip, Buffer.from(now.toString()))
+		}
+		else {
+			console.log('Failure!')
+		}
 		console.log(req.params.address)
 		res.send('Hello World!')
 	})
