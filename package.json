@@ -9,6 +9,7 @@
   "private": false,
   "dependencies": {
     "express": "^4.17.1",
+    "level": "^5.0.1",
     "web3": "^2.0.0-alpha.1"
   }
 }
