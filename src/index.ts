@@ -3,6 +3,7 @@ import fs from 'fs'
 import net from 'net'
 import levelup from 'levelup'
 import leveldown from 'leveldown'
+import cors from 'cors'
 import express from 'express'
 import * as bip32 from 'bip32'
 import { BIP32Interface } from 'bip32'
@@ -23,6 +24,7 @@ async function start() {
 	var db = levelup(leveldown(dbPath))
 
 	let app = express()
+	app.use(cors());
 	let port = 3000
 
 	// Calculate private key and controller address.
