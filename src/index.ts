@@ -13,8 +13,7 @@ let keythereum = require('keythereum')
 
 
 async function start() {
-	let parityIpcPath = process.env['HOME'] + '/.config/MIX Acuity/parity.ipc'
-//	let parityIpcPath = process.env['HOME'] + '/.local/share/io.parity.ethereum/jsonrpc.ipc'
+	let parityIpcPath = process.env['HOME'] + '/.local/share/io.parity.ethereum/jsonrpc.ipc'
 	let web3 = new Web3(new Web3.providers.IpcProvider(parityIpcPath, net))
 
 	let blockNumber = await web3.eth.getBlockNumber()
@@ -25,8 +24,7 @@ async function start() {
 	var db = levelup(leveldown(dbPath))
 
 	let app = express()
-  app.set('trust proxy', '127.0.0.1')
-	app.use(cors())
+	app.use(cors());
 	let port = 3000
 
 	// Calculate private key and controller address.
