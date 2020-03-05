@@ -9,7 +9,6 @@ import * as bip32 from 'bip32'
 import { BIP32Interface } from 'bip32'
 import * as bip39  from 'bip39'
 let ethTx = require('ethereumjs-tx')
-let keythereum = require('keythereum')
 
 
 async function start() {
@@ -32,7 +31,7 @@ async function start() {
 	let recoveryPhrase = fs.readFileSync(process.env['HOME'] + '/.faucet.phrase').toString().trim()
 	let node: BIP32Interface = bip32.fromSeed(await bip39.mnemonicToSeed(recoveryPhrase))
 	let privateKey: Buffer = node.derivePath("m/44'/76'/0'/0/0").privateKey!
-	let from: string = keythereum.privateKeyToAddress(privateKey)
+	let from: string = web3.eth.accounts.privateKeyToAccount(privateKey).address
 
 	console.log(from)
 
