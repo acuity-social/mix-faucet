@@ -31,7 +31,7 @@ async function start() {
 	let recoveryPhrase = fs.readFileSync(process.env['HOME'] + '/.faucet.phrase').toString().trim()
 	let node: BIP32Interface = bip32.fromSeed(await bip39.mnemonicToSeed(recoveryPhrase))
 	let privateKey: Buffer = node.derivePath("m/44'/76'/0'/0/0").privateKey!
-	let from: string = web3.eth.accounts.privateKeyToAccount(privateKey).address
+	let from: string = web3.eth.accounts.privateKeyToAccount(privateKey.toString('hex')).address
 
 	console.log(from)
 
