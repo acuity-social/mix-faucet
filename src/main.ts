@@ -10,10 +10,21 @@ import { BIP32Interface } from 'bip32'
 import * as bip39  from 'bip39'
 let ethTx = require('ethereumjs-tx')
 
+let web3: any
 
 async function start() {
-	let parityIpcPath = process.env['HOME'] + '/.local/share/io.parity.ethereum/jsonrpc.ipc'
-	let web3 = new Web3(new Web3.providers.IpcProvider(parityIpcPath, net))
+  console.log('Waiting for MIX IPC.')
+  await new Promise((resolve, reject) => {
+    let intervalId = setInterval(async () => {
+      try {
+        web3 = new Web3(new Web3.providers.IpcProvider(process.env.MIX_IPC_PATH!, net))
+        await web3.eth.getProtocolVersion()
+        clearInterval(intervalId)
+        resolve()
+      }
+      catch (e) {}
+    }, 1000)
+  })
 
 	let blockNumber = await web3.eth.getBlockNumber()
 	console.log('Block: ' + blockNumber.toLocaleString())
@@ -61,13 +72,13 @@ async function start() {
 				tx.sign(privateKey)
 				let serializedTx = tx.serialize()
 				web3.eth.sendSignedTransaction('0x' + serializedTx.toString('hex'))
-				.on('transactionHash', async transactionHash => {
+				.on('transactionHash', async (transactionHash: string) => {
 					res.send('MIX sent.')
 					db.put(ip, Buffer.from(now.toString()))
 					console.log(transactionHash)
 				})
 				.on('receipt', console.log)
-				.on('error', error => {
+				.on('error', (error: string) => {
 					res.status(403).send('Failed to send MIX.')
 					console.error(error)
 				})
