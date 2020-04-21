@@ -26,6 +26,8 @@ async function start() {
     }, 1000)
   })
 
+  web3.eth.defaultBlock = 'pending'
+  web3.eth.transactionConfirmationBlocks = 1
 	let blockNumber = await web3.eth.getBlockNumber()
 	console.log('Block: ' + blockNumber.toLocaleString())
 
