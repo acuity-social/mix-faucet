@@ -73,14 +73,16 @@ async function start() {
 				let tx = new ethTx(rawTx)
 				tx.sign(privateKey)
 				let serializedTx = tx.serialize()
-				web3.eth.sendSignedTransaction('0x' + serializedTx.toString('hex'))
+				let event: any = web3.eth.sendSignedTransaction('0x' + serializedTx.toString('hex'))
 				.on('transactionHash', async (transactionHash: string) => {
+          event.removeAllListeners()
 					res.send('MIX sent.')
 					db.put(ip, Buffer.from(now.toString()))
 					console.log(transactionHash)
 				})
 				.on('receipt', console.log)
 				.on('error', (error: string) => {
+          event.removeAllListeners()
 					res.status(403).send('Failed to send MIX.')
 					console.error(error)
 				})
